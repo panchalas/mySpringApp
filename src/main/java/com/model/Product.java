@@ -2,6 +2,9 @@ package com.model;
 
 import java.io.BufferedOutputStream;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -10,9 +13,8 @@ import java.io.*;
 @Table(name="Product")
 public class Product 
 {
-
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="ID")
 	private int id;
 	
@@ -28,7 +30,7 @@ public class Product
 	private String ImgPath;
 	
 	transient private MultipartFile mpartFile;
-	
+		
 	public int getId() {
 		return id;
 	}
@@ -79,7 +81,7 @@ public class Product
 		this.mpartFile = mpartFile;
 	}
 	
-	public String getFilePath(String path1,String contextPath)
+	public String getFilePath(String path1,String contextPath,String category)
 	{
 		String fileName=null;
 		if(!mpartFile.isEmpty())
@@ -87,12 +89,24 @@ public class Product
 			try
 			{
 				fileName=mpartFile.getOriginalFilename();
+				System.out.println("FileName: "+fileName);
 				byte[] bytes = mpartFile.getBytes();
-				String npath=path1+"\\resources\\"+fileName;
+				String npath="",devicepath="";
+				if(category.equals("camera"))
+					devicepath="resources\\images\\cameras\\";
+				else if(category.equals("ehdd"))
+					devicepath="resources\\images\\ehdds\\";
+				else if(category.equals("tablet"))
+					devicepath="resources\\images\\tablets\\";
+				
+				npath=path1+devicepath+fileName;
+				System.out.println("npath: "+npath);
 				BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File(npath)));
+				//BufferedOutputStream buffStream = new BufferedOutputStream(new FileOutputStream(new File("D:\\images\\"+fileName)));
 				buffStream.write(bytes);
 	            buffStream.close();
-	            String dbfilename=contextPath+"/resources/"+fileName;
+	            String dbfilename=contextPath+"/"+devicepath+fileName;
+	            //String dbfilename=npath;
 	            setImgPath(dbfilename);
 	            return dbfilename;
 			}
@@ -104,6 +118,7 @@ public class Product
 		}
 		else
 		{
+			System.out.println("error: mpartFile is Empty");
 			return "fail";
 		}
 	}

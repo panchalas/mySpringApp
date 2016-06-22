@@ -69,12 +69,14 @@
 					<br />
 					<form:input path="PrdName" size="50" />
 					<br />
+					<form:errors path="PrdName" cssClass="error"/>
 				</div>
 				<div class="col-sm-8">
 					<form:label path="Price">Product Price:</form:label>
 					<br />
 					<form:input path="Price" size="50" />
 					<br />
+					<form:errors path="Price" cssClass="error"/>
 				</div>
 
 				<div class="col-sm-8">
@@ -108,7 +110,7 @@
 				</div>
 				<div class="col-sm-8">
 					<form:label path="ImgPath">Image Path:</form:label>
-					<br /> <input type="file" name="prdFile" /><br />
+					<br /> <input type="file" name="mpartFile" /><br />
 				</div>
 
 

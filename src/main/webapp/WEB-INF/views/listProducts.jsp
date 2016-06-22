@@ -64,6 +64,7 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr>
+							<th></th>
 							<th>Id</th>
 							<th>Product Name</th>
 							<th>Price</th>
@@ -74,6 +75,7 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="x in data">
+							<td><img src={{x.ImgPath}} height="50px" width="50px" /></td>
 							<td>{{x.id}}</td>
 							<td>{{x.PrdName}}</td>
 							<td>{{x.Price}}</td>

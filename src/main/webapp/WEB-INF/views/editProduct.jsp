@@ -30,67 +30,79 @@ h1 {
 <body>
 	<div class="bs-example">
 		<h1>Modify Product Entry</h1>
-		<form:form method="POST" commandName="cmd_save_editedProduct"
-			action="saveEditedProduct">
-			<div class="form-group">
-				<div class="col-sm-8">
-					<form:label path="id">Product Id:</form:label>
-					<br />
-					<form:input path="id" readonly="true" value="${editrow.getId()}"
-						size="50" />
-					<br />
-				</div>
-				<div class="col-sm-8">
-					<form:label path="PrdName">Product Name:</form:label>
-					<br />
-					<form:input path="PrdName" value="${editrow.getPrdName()}"
-						size="50" />
-					<br />
-					<form:errors path="PrdName" cssClass="error" />
-					<br />
-				</div>
-				<div class="col-sm-8">
-					<form:label path="Price">Product Price:</form:label>
-					<br />
-					<form:input path="Price" value="${editrow.getPrice()}" size="70" />
-					<br />
-					<form:errors path="Price" cssClass="error" />
-					<br />
-				</div>
-				<div class="col-sm-8">
-					<form:label path="Category">Product Category:</form:label>
-					<br />
-					<form:input path="Category" value="${editrow.getCategory()}" size="70" />
-					<br />
-					<form:errors path="Category" cssClass="error" />
-					<br />
-				</div>
-				<div class="col-sm-8">
-					<form:label path="Warranty">Product Warranty:</form:label>
-					<br />
-					<form:input path="Warranty" value="${editrow.getWarranty()}" size="70" />
-					<br />
-					<form:errors path="Warranty" cssClass="error" />
-					<br />
-				</div>
-				<div class="col-sm-8">
-					<form:label path="Discount">Product Discount:</form:label>
-					<br />
-					<form:input path="Discount" value="${editrow.getDiscount()}" size="70" />
-					<br />
-					<form:errors path="Discount" cssClass="error" />
-					<br />
-				</div>
-				
-				<div class="col-sm-8">
-					<input type="submit" value="Submit" /><br />
-				</div>
-			</div>
-		</form:form>
+		<table>
+			<tr>
+				<td><img src="${editrow.getImgPath()}" height="100px"
+					width="100px" /></td>
+				<td><form:form method="POST"
+						commandName="cmd_save_editedProduct" action="saveEditedProduct">
+						<div class="form-group">
+							<div class="col-sm-8">
+								<form:label path="id">Product Id:</form:label>
+								<br />
+								<form:input path="id" readonly="true" value="${editrow.getId()}"
+									size="50" />
+								<br />
+							</div>
+							<div class="col-sm-8">
+								<form:label path="PrdName">Product Name:</form:label>
+								<br />
+								<form:input path="PrdName" value="${editrow.getPrdName()}"
+									size="50" />
+								<br />
+								<form:errors path="PrdName" cssClass="error" />
+								<br />
+							</div>
+							<div class="col-sm-8">
+								<form:label path="Price">Product Price:</form:label>
+								<br />
+								<form:input path="Price" value="${editrow.getPrice()}" size="70" />
+								<br />
+								<form:errors path="Price" cssClass="error" />
+								<br />
+							</div>
+							<div class="col-sm-8">
+								<form:label path="Category">Product Category:</form:label>
+								<br />
+								<form:input path="Category" value="${editrow.getCategory()}"
+									size="70" />
+								<br />
+								<form:errors path="Category" cssClass="error" />
+								<br />
+							</div>
+							<div class="col-sm-8">
+								<form:label path="Warranty">Product Warranty:</form:label>
+								<br />
+								<form:input path="Warranty" value="${editrow.getWarranty()}"
+									size="70" />
+								<br />
+								<form:errors path="Warranty" cssClass="error" />
+								<br />
+							</div>
+							<div class="col-sm-8">
+								<form:label path="Discount">Product Discount:</form:label>
+								<br />
+								<form:input path="Discount" value="${editrow.getDiscount()}"
+									size="70" />
+								<br />
+								<form:errors path="Discount" cssClass="error" />
+								<br />
+							</div>
+							<div class="col-sm-8">
+								<form:label path="ImgPath">Image Path:</form:label>
+								<br /> <input type="file"  name="mpartFile" /><br />
+							</div>
+							<div class="col-sm-8">
+								<input type="submit" value="Submit" /><br />
+							</div>
+						</div>
+					</form:form></td>
+			</tr>
+		</table>
 	</div>
 	<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 </html>
