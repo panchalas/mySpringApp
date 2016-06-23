@@ -69,14 +69,13 @@ public class ProductDaoImpl implements ProductDao {
 		return plist;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Transactional
 	public List<Product> getList() {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-
 		@SuppressWarnings("unchecked")
 		List<Product> plist = session.createQuery("from Product").list();
+		tx.commit();
 		session.close();
 		return plist;
 		

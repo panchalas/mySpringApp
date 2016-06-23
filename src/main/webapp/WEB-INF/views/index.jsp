@@ -28,13 +28,12 @@
 			<div class="collapse navbar-collapse navHeaderCollapse">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="<c:url value='/index'/>">Home</a></li>
-					<li><a href="<c:url value='/addProduct'/>">Add Product</a></li>
 					<li><a href="<c:url value='/contactUs'/>">Contact Us</a></li>
 					<li><a href="<c:url value='/aboutUs'/>"> About Us</a></li>
-					<li><a href="<c:url value='/adminLogin'/>"> <span
-							class="glyphicon glyphicon-user"></span> Login
+					<li><a href="<c:url value='/signin'/>"> <span
+							class="glyphicon glyphicon-user"></span>Login
 					</a></li>
-					<li><a href="<c:url value='/register'/>"> <span
+					<li><a href="<c:url value='/addRegister'/>"> <span
 							class="glyphicon glyphicon-user"></span> Sign Up
 					</a></li>
 				</ul>

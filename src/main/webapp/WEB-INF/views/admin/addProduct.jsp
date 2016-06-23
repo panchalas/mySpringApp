@@ -50,14 +50,13 @@
 				<div class="collapse navbar-collapse navHeaderCollapse">
 					<ul class="nav navbar-nav navbar-right">
 						<li class="active"><a href="<c:url value='/index'/>">Home</a></li>
-						<li><a href="<c:url value='/login'/>"> <span
-								class="glyphicon glyphicon-user"></span> Login
+						<li><a href="<c:url value='/logout'/>"> <span
+								class="glyphicon glyphicon-user"></span> Logout
 						</a> <!--  <a id="myBtn" style="cursor: pointer">Login</a></li>-->
 					</ul>
 				</div>
 			</div>
 		</nav>
-
 
 		<h2>Add Product Form</h2>
 		<form:form method="POST" commandName="Product" action="saveProduct"
@@ -69,7 +68,7 @@
 					<br />
 					<form:input path="PrdName" size="50" />
 					<br />
-					<form:errors path="PrdName" cssClass="error"/>
+					<form:errors path="PrdName" cssClass="error" />
 				</div>
 				<div class="col-sm-8">
 					<form:label path="Price">Product Price:</form:label>
@@ -112,7 +111,6 @@
 					<form:label path="ImgPath">Image Path:</form:label>
 					<br /> <input type="file" name="mpartFile" /><br />
 				</div>
-
 
 				<div class="col-sm-8">
 					<button type="submit" class="btn btn-success">Submit</button>

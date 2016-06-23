@@ -1,16 +1,21 @@
 package com;
 
+import java.security.Principal;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.spi.http.HttpContext;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import com.service.ProductService;
-import com.model.*;
+//import com.service.ProductService;
+import com.model.Product;
 
 @Controller
 public class HomeController {
@@ -36,6 +42,63 @@ public class HomeController {
 	public HomeController() {
 	}
 
+	// --------------------------------------------------------------- start-login 
+		@RequestMapping(value="/signin", method=RequestMethod.GET)
+		public String loginPage() {
+		//ModelAndView mv = new ModelAndView("login");
+			return "login";
+		}
+		
+		//Spring Security see this :
+		@RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
+		public ModelAndView login(
+			@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout) {
+
+			ModelAndView model = new ModelAndView();
+			if (error != null) {
+				model.addObject("error", "Invalid username and password!");
+				System.out.println("error");
+			}
+
+			if (logout != null) {
+				model.addObject("msg", "You've been logged out successfully.");
+				System.out.println("logout");
+			}
+			model.setViewName("/admin/addProduct");
+			System.out.println("login");
+			return model;
+		}
+
+		@RequestMapping(value="/enter", method=RequestMethod.GET)
+		public String enterPage(ModelMap model, Principal principal) {
+			String name=principal.getName();
+			model.addAttribute("username", name);
+			model.addAttribute("message","Spring Security Basic Form Example");
+			return "enter";
+		}
+
+		@RequestMapping(value="/loginfailed",  method=RequestMethod.GET)
+		public String loginerror(ModelMap model) {
+			model.addAttribute("error", "true");
+			return "login";
+		}
+		
+		@RequestMapping(value = "/logout", method = RequestMethod.GET)
+		public String logoutPage(HttpServletRequest request, HttpServletResponse response) 
+		{
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (auth != null)
+			{
+				new SecurityContextLogoutHandler().logout(request, response, auth);
+			}
+			return "/index";
+			// You can redirect wherever you want, but generally
+				// it's a good practice to show login screen again​
+		}
+		
+		// --------------------------------------------------------------- end-login
+		
 	@RequestMapping(value = "/listAllProducts", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody String listProducts(Model model) {
 		model.addAttribute("Product", new Product());
@@ -79,7 +142,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/saveEditedProduct", method = RequestMethod.POST)
-	public String editProduct(@Validated @ModelAttribute("cmd_save_editedProduct") Product product,
+	public String editProduct(@Valid @ModelAttribute("cmd_save_editedProduct") Product product,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			for (ObjectError lst : result.getAllErrors()) {
@@ -123,7 +186,7 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/saveProduct", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("Product") Product product, BindingResult result)
+	public String saveProduct(@Valid @ModelAttribute("Product") Product product, BindingResult result)
 	// public ModelAndView saveProduct(@ModelAttribute("Product") Product
 	// product, BindingResult result)
 	{
@@ -203,7 +266,7 @@ public class HomeController {
 		return model;
 	}
 	// ------------------------------------------------------------------------------------end-listing
-
+	
 	@RequestMapping("/")
 	public ModelAndView indexPage() {
 		ModelAndView mv = new ModelAndView("index");
@@ -215,7 +278,19 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("index");
 		return mv;
 	}
-
+	
+	@RequestMapping("/contactUs")
+	public ModelAndView contactPage() {
+		ModelAndView mv = new ModelAndView("contactUs");
+		return mv;
+	}
+	
+	@RequestMapping("/aboutUs")
+	public ModelAndView aboutPage() {
+		ModelAndView mv = new ModelAndView("aboutUs");
+		return mv;
+	}
+	
 	@RequestMapping(value = "/edit/{cat}", method = RequestMethod.POST)
 	public String editProduct(@PathVariable("cat") String cat, Model model) {
 		model.addAttribute("pr", this.pservice.getByCategory(cat));
